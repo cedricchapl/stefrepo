@@ -4,6 +4,6 @@
 	<classpathentry kind="src" path="resource"/>
 	<classpathentry kind="src" path="config"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Users/cedric/workspace/doyouwar/lib/commons-lang3-3.3.2.jar"/>
+	<classpathentry kind="lib" path="C:/git/stef/doyouwar/lib/commons-lang3-3.3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
