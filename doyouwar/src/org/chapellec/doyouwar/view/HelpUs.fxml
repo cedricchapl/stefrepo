@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+
+<VBox fx:id="HelpUsPane" prefWidth="800" prefHeight="500"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="org.chapellec.doyouwar.controller.HelpUsController">
+	<Label wrapText="true">
+	HELP US TO HELP YOU TO HELP US TO HELP YOU TO HELP US TO HELP YOU TO HELP US TO 
+	HELP YOU TO HELP US TO HELP YOU TO HELP US TO HELP YOU TO HELP US TO HELP YOU TO HELP US   
+	</Label>
+</VBox>
+

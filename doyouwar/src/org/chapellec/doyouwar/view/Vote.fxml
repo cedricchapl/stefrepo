@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Button?>
+
+<VBox fx:id="votePane" prefWidth="800" prefHeight="500"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="org.chapellec.doyouwar.controller.VoteController">
+
+	<Label id="voteQuestion" text="DO YOU WANT WAR ?" />
+	<fx:define>
+		<ToggleGroup fx:id="answerGroup" />
+	</fx:define>
+	<RadioButton fx:id="answerYES" text="YES" toggleGroup="$answerGroup" />
+	<RadioButton fx:id="answerNO" text="NO" toggleGroup="$answerGroup" />
+	<Button onAction="#submitAction" text="SUBMIT"/>
+
+	<GridPane  fx:id="voteResultsPane" prefWidth="564" prefHeight="308"
+		visible="false" gridLinesVisible="true">
+		<Label text="YES :"  styleClass="voteResultLabel"
+			GridPane.columnIndex="0" GridPane.rowIndex="0" />
+		<Label fx:id="resultsYES" styleClass="voteResultLabel"
+			GridPane.columnIndex="1" GridPane.rowIndex="0" />
+		<Label text="NO :"  styleClass="voteResultPct"
+			GridPane.columnIndex="0" GridPane.rowIndex="1" />
+		<Label fx:id="resultsNO" styleClass="voteResultPct"
+			GridPane.columnIndex="1" GridPane.rowIndex="1" />
+		<Label fx:id="resultsTotal" 
+			GridPane.columnIndex="2" GridPane.rowIndex="2" />
+	</GridPane>
+
+	<Label fx:id="voteInfo" />
+</VBox>
+
