@@ -1,1 +1,4 @@
 /bin/
+/target/
+/doc/
+/logs/

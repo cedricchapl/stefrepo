@@ -5,18 +5,15 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
-import org.chapellec.doyouwar.Utils;
-import org.chapellec.doyouwar.model.AnswerLocalProcess;
-import org.chapellec.doyouwar.model.AnswerProcess;
-import org.chapellec.doyouwar.model.AnswerServerProcess;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.chapellec.doyouwar.Doyouwar;
 import org.chapellec.doyouwar.model.Stats;
+import org.chapellec.doyouwar.model.StatsProcess;
 
 /**
  * Contrôleur de l'interface de vote
@@ -26,11 +23,23 @@ import org.chapellec.doyouwar.model.Stats;
  */
 public class VoteController implements Initializable {
 
-	@FXML
-	private VBox votePane;
+	private static final Logger logger = LogManager.getLogger(VoteController.class);
+
+	/**
+	 * Référence à l'application courante
+	 */
+	private Doyouwar application;
+
+	/**
+	 * @param application
+	 *            the application to set
+	 */
+	public void setMain(Doyouwar application) {
+		this.application = application;
+	}
 
 	@FXML
-	private GridPane voteResultsPane;
+	private VBox votePane;
 
 	@FXML
 	private ToggleGroup answerGroup;
@@ -41,69 +50,43 @@ public class VoteController implements Initializable {
 	@FXML
 	private RadioButton answerNO;
 
-	@FXML
-	private Label resultsYES;
-
-	@FXML
-	private Label resultsNO;
-
-	@FXML
-	private Label resultsTotal;
-
-	@FXML
-	private Label voteInfo;
-
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		voteResultsPane.setMaxSize(Pane.USE_PREF_SIZE, Pane.USE_PREF_SIZE);
-		voteResultsPane.setVisible(false);
 	}
 
 	/**
 	 * handler for submit button
 	 */
 	@FXML
-	public void submitAction() {
-		StringBuilder infoBuilder = new StringBuilder();
+	public void submitVote() {
+		logger.debug("start submitVote()");
 		RadioButton selRadio = (RadioButton) answerGroup.getSelectedToggle();
-		if (selRadio == null) {
-			infoBuilder.append("You MUST choose an answer... coward !");
-		} else {
+		if (selRadio != null) {
 			String answer = selRadio.getText();
-			String warning = "";
-			AnswerProcess process = null;
 
-			boolean serverOK = isWebServiceAvailable();
-			// maj de stats
-			if (serverOK) {
-				process = new AnswerServerProcess();
-				process.process(answer, answerYES.getText(), answerNO.getText());
+			StatsProcess process = new StatsProcess();
+
+			String warning = "";
+			if (process.process(answer, answerYES.getText(), answerNO.getText())) {
 				warning = " (Succeeded to connect to the server, displaying up-to-date statistics...)";
 			} else {
-				process = new AnswerLocalProcess();
-				process.process(answer, answerYES.getText(), answerNO.getText());
 				warning = " (Failed to connect to the server, displaying last known statistics...)";
 			}
 
-			// formattage des stats pour affichage
 			Stats stats = process.getStats();
-			resultsYES.setText(stats.getPctYES() + "%");
-			resultsNO.setText(stats.getPctNO() + "%");
-			resultsTotal.setText(String.format("%05d", stats.getTotal()));
-			infoBuilder.append(warning);
-			voteResultsPane.setVisible(true);
 
+			displayStats(stats, warning);
 		}
-		voteInfo.setText(infoBuilder.toString());
 	}
 
 	/**
-	 * Teste si le web service Doyouwantwar est accessible
 	 * 
-	 * @return
+	 * @param stats
+	 * @param warning
 	 */
-	private boolean isWebServiceAvailable() {
-		return Utils.testURL("http://www.yahoo.fr");
+	public void displayStats(Stats stats, String warning) {
+		logger.debug("start displayStats()");
+		application.gotoStats(stats, warning);
 	}
 
 }

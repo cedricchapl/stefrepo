@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="statsPane" prefWidth="800" prefHeight="500"
+	stylesheets="applications.css"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="org.chapellec.doyouwar.controller.StatsController">
+	
+	<GridPane  fx:id="resultsPane" prefWidth="750" prefHeight="375"
+		gridLinesVisible="true">
+		<Label text="YES :"  styleClass="voteResultLabel"
+			GridPane.columnIndex="0" GridPane.rowIndex="0" />
+		<Label fx:id="resultsYES" styleClass="voteResultLabel"
+			GridPane.columnIndex="1" GridPane.rowIndex="0" />
+		<Label text="NO :"  styleClass="voteResultPct"
+			GridPane.columnIndex="0" GridPane.rowIndex="1" />
+		<Label fx:id="resultsNO" styleClass="voteResultPct"
+			GridPane.columnIndex="1" GridPane.rowIndex="1" />
+		<Label text="Voters :"  styleClass="voteResultLabel" 
+			GridPane.columnIndex="3" GridPane.rowIndex="2" />
+		<Label fx:id="resultsTotal" 
+			GridPane.columnIndex="4" GridPane.rowIndex="2" />
+		<Label fx:id="voteInfo"
+			GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="4"/>
+	</GridPane>
+
+	
+</VBox>

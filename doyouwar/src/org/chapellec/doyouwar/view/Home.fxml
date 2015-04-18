@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Button?>
-<?import com.sun.javafx.scene.control.skin.LabeledText?>
-<?import javafx.scene.control.Labeled?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.text.Text?>
 
 <VBox fx:id="homePane" prefWidth="800" prefHeight="500"
+	stylesheets="applications.css"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="org.chapellec.doyouwar.controller.HomeController">
 	<children>
-		<Text id="homeTitle" text="INTRODUCTION"/>
+		<ImageView preserveRatio="true">
+			<image>
+				<Image fx:id="logo" url="doyouwar50.png" backgroundLoading="true"/>
+			</image>			
+		</ImageView>		
 		<Label id="homeIntro" wrapText="true">
-DOYOUWAR est un projet artistique interactif qui récolte les données relatives,
- selon les participants, à l’approbation ou au rejet de la guerre. 
-Il en génère une donnée statistique et la rend publique en garantissant transparence,
- anonymat et liberté d’expression.
-		</Label>
-		<Button id="homeEnterBtn" onAction="#continueAction" text="ENTER" />
+DOYOUWAR is an interactive art project that collects data relating to consent or to rejection to the war by its participants, it generates statistics and makes it public. The developed voting system ensures total transparency, anonymity and freedom of expression.
+</Label>
+		<Button id="homeAccessProjectBtn" onAction="#accessProject" text="ACCESS THE VOTE" />
 	</children>
 </VBox>
