@@ -1,0 +1,74 @@
+#homePane {	
+	-fx-background-color: white;
+	-fx-alignment:center;
+}
+
+#logo {
+	-fx-alignment:right;
+   	-fx-padding: 0 10 0 0;	
+}
+
+#homeIntro {	
+	-fx-alignment: center;
+	-fx-padding: 30 10;	
+}
+
+#homeAccessProjectBtn {
+	-fx-alignment: center;
+}
+
+#votePane {
+	-fx-background-color: white;
+	-fx-alignment:center;
+}
+
+#voteQuestion {
+   	-fx-font-size: 1.5em;
+   	-fx-font-family: "Arial Black ";
+	-fx-font-weight: bold;
+   	-fx-fill: #818181;
+   	-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#statsPane {
+	-fx-background-color: white;
+	-fx-alignment:center;
+}
+
+#resultsPane {
+	-fx-background-size: cover;
+	-fx-background-image: url(world.jpg) ;
+	-fx-background-position: center center;		 
+	-fx-background-repeat:no-repeat;
+}
+
+.voteResultLabel {
+    -fx-font-size: 3em;
+    -fx-font-family: "Verdana";
+    -fx-font-weight: bold ;
+    -fx-text-fill: darkred;    
+    /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
+}
+		
+.voteResultPct {
+    -fx-font-size: 3em;
+    -fx-font-family: "Verdana";
+    -fx-font-weight: bold ;
+    -fx-text-fill: darkred;    
+   /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
+}
+
+#resultsTotal {
+    -fx-font: 2em "Verdana";
+}
+
+
+.button {
+	-fx-pref-width: 100px;
+	-fx-pref-height: 40px;	
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
