@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -68,7 +70,7 @@ public class StatsProcess {
 			boolean remoteTry = saveCurrent(true, answer, valYES, valNO);
 			load(remoteTry);
 			compute();
-			return true;
+			return remoteTry;
 		} else {
 			saveCurrentLocally(answer, valYES, valNO);
 			compute();
@@ -90,7 +92,9 @@ public class StatsProcess {
 				logger.info("sendPending() : impossible to connect to the internet to synchronize pending local answers to server... next time maybe !");
 				return false;
 			} else {
-				return new AppClient().post(stats.getPendingNbYES(), stats.getPendingNbNO());
+				// return new AppClient().post(stats.getPendingNbYES(),
+				// stats.getPendingNbNO());
+				return true;
 			}
 		}
 		logger.debug("sendPending() : no pending local answers to synchronize.");
@@ -111,23 +115,25 @@ public class StatsProcess {
 		if (remoteTry && Utils.isWebsiteAvailable()) {
 
 			// maj des stats courantes
-			int yes = 0;
-			int no = 0;
+			Map<String, Integer> answers = new LinkedHashMap<String, Integer>();
 			if (answer.equals(valYES)) {
-				yes = 1;
+				answers.put("yes", 1);
+				answers.put("no", 0);
 			} else {
-				no = 1;
+				answers.put("yes", 0);
+				answers.put("no", 1);
 			}
 
-			if (new AppClient().post(yes, no))
+			if (new AppClient().post(answers))
 				return true;
 		}
 
-		logger.info("impossible de contacter le serveur pour envoi de la reponse courante ==> stockage en local");
+		logger.info("failed to contact server for sending current answer ==> saving locally...");
 		saveCurrentLocally(answer, valYES, valNO);
 		return true;
 	}
 
+	
 	/**
 	 * sauvegarde la reponse en attente en local
 	 */
@@ -157,14 +163,13 @@ public class StatsProcess {
 			return true;
 
 		} catch (IOException e) {
-			System.err.println("Echec de l'ecriture de " + localStatsFile.getName());
-			System.err.println(e);
+			logger.error("Fail to write in file " + localStatsFile.getName(), e);
 			return false;
 		} finally {
 			try {
 				writer.close();
 			} catch (IOException e) {
-				System.err.println(e);
+				logger.error(e);
 			}
 		}
 	}
@@ -195,7 +200,7 @@ public class StatsProcess {
 	/**
 	 * 
 	 */
-	public void loadLocally() {
+	public boolean loadLocally() {
 		if (logger.isDebugEnabled()) {
 			logger.debug("start loadLocally()");
 		}
@@ -221,12 +226,13 @@ public class StatsProcess {
 				// 4eme ligne du fichier : nombre de NO en attente en local
 				stats.setPendingNbNO(Integer.valueOf(pendingStatsNO));
 			}
+			return true;
 		} catch (IOException e) {
-			logger.error("Echec de la lecture de " + localStatsFile.getName());
-			logger.error(e);
+			logger.error("Failed to read file " + localStatsFile.getName(), e);
+			return false;
 		} catch (NumberFormatException e) {
-			logger.error("Echec de la lecture de " + localStatsFile.getName());
-			logger.error(e);
+			logger.error("Failed to read file " + localStatsFile.getName(), e);
+			return false;
 		} finally {
 			try {
 				reader.close();
@@ -247,6 +253,5 @@ public class StatsProcess {
 		stats.setPctYES(Math.round((stats.getNbYES() + stats.getPendingNbYES()) * 100
 				/ stats.getTotal()));
 		stats.setPctNO(100 - stats.getPctYES());
-	}
-
+	}		
 }

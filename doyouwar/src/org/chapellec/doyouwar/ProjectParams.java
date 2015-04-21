@@ -17,20 +17,24 @@ public class ProjectParams {
 	private static Properties props = new Properties();
 
 	/**
-	 * cle de message du fichier de donnees serveur
-	 */
-	public static String SERVERDATA_FILE_KEY = "filename.serverdata";
-
-	/**
 	 * cle de message du fichier de donnees local
 	 */
 	public static String LOCALDATA_FILE_KEY = "filename.localdata";
-	
+
 	/**
 	 * cle de message de l'url du service rest de maj/consultation des votes
 	 */
 	public static String REST_URL_KEY = "rest.url";
-	
+
+	/**
+	 * cle de message du pass du service rest
+	 */
+	public static String REST_AUTH_KEY = "rest.auth";
+
+	/**
+	 * cle de message de l'url du site web
+	 */
+	public static String WEB_URL_KEY = "web.url";
 
 	private static boolean init() {
 		try {

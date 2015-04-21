@@ -1,5 +1,7 @@
 package org.chapellec.doyouwar;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -26,7 +28,7 @@ public class Utils {
 	 * @return
 	 */
 	public static boolean isWebsiteAvailable() {
-		return testURL(ProjectParams.getProperty("web.url"));
+		return testURL(ProjectParams.getProperty(ProjectParams.WEB_URL_KEY));
 	}
 
 	/**
@@ -61,4 +63,40 @@ public class Utils {
 		}
 		return connected;
 	}
+
+	/**
+	 * sauvegarde la reponse en attente en local
+	 */
+	public static boolean reinitStatsLocally() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("start deleteStatsLocally()");
+		}
+
+		// ecriture dans le fichier
+		BufferedWriter writer = null;
+		String localStatsFilename = ProjectParams.getProperty(ProjectParams.LOCALDATA_FILE_KEY);
+		try {
+			writer = new BufferedWriter(new FileWriter(localStatsFilename));
+			writer.write("0");
+			writer.newLine();
+			writer.write("0");
+			writer.newLine();
+			writer.write("0");
+			writer.newLine();
+			writer.write("0");
+			writer.newLine();
+			return true;
+
+		} catch (IOException e) {
+			logger.error("Fail to reinitialize local stats in file " + localStatsFilename, e);
+			return false;
+		} finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				logger.error(e);
+			}
+		}
+	}
+
 }

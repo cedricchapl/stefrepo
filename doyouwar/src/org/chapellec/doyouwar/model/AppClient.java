@@ -7,6 +7,7 @@ import java.net.URI;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -27,7 +28,6 @@ import javax.ws.rs.core.UriBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.chapellec.doyouwar.ProjectParams;
-import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
 /**
@@ -94,11 +94,11 @@ public class AppClient {
 		UriBuilder builder = UriBuilder.fromUri(restURL);
 		URI restURI = null;
 		logger.debug("predefined rest url to use : " + restURL);
-		if (encrypted) {			
+		if (encrypted) {
 			restURI = builder.build();
 		} else {
-			logger.debug("force the use of the http rest url to avoid ssl certficats problems");
-			restURI = builder.scheme("http:").build();
+			logger.debug("force the use of the http rest url to avoid ssl certficates problems");
+			restURI = builder.scheme("http").build();
 		}
 
 		return restURI;
@@ -116,7 +116,8 @@ public class AppClient {
 		Response resp = target
 				.request(MediaType.APPLICATION_JSON)
 				.header(HttpHeaders.AUTHORIZATION,
-						"Basic " + ProjectParams.getProperty("rest.auth")).get(Response.class);
+						"Basic " + ProjectParams.getProperty(ProjectParams.REST_AUTH_KEY))
+				.get(Response.class);
 
 		if (resp.getStatus() == HttpsURLConnection.HTTP_OK) {
 			ServerStats serverStats = resp.readEntity(ServerStats.class);
@@ -131,32 +132,27 @@ public class AppClient {
 	/**
 	 * Transférer des réponses vers le serveur
 	 * 
-	 * @param yes
-	 *            nb de yes
-	 * @param no
-	 *            nb de no
+	 * @param answers
+	 *            map comportant un nombre de votes "yes"
+	 *            et un nombre de votes "no"
+	 * 
 	 * @return true si réussite du transfert
 	 */
-	public boolean post(int yes, int no) {
+	public boolean post(Map<String, Integer> answers) {
 		logger.debug("start post()");
 
 		WebTarget target = build().target(AppClient.getBaseURI(true));
-		JSONObject data = null;
-		try {
-			data = new JSONObject("{\"yes\":" + yes + ", \"no\":" + no + "}");
-		} catch (JSONException e) {
-			logger.error(e);
-		}
+		JSONObject data = new JSONObject(answers);
 
 		Response resp = target
 				.request()
 				.header(HttpHeaders.AUTHORIZATION,
-						"Basic " + ProjectParams.getProperty("rest.auth"))
+						"Basic " + ProjectParams.getProperty(ProjectParams.REST_AUTH_KEY))
 				.post(Entity.entity(data, MediaType.APPLICATION_JSON));
-				
+
 		if (resp.getStatus() == HttpsURLConnection.HTTP_CREATED) {
 			logger.debug("post() response : " + resp);
-			logger.debug("json data sent : " + data);		
+			logger.debug("json data sent : " + data);
 			return true;
 		}
 		logger.error("post(), response error : " + resp);

@@ -112,7 +112,6 @@ public class Doyouwar extends Application {
 	 */
 	public static void initConfig() throws IOException {
 		logger.debug("start initConfig()");
-		new File(ProjectParams.getProperty(ProjectParams.SERVERDATA_FILE_KEY)).createNewFile();
 		new File(ProjectParams.getProperty(ProjectParams.LOCALDATA_FILE_KEY)).createNewFile();
 	}
 
@@ -128,6 +127,8 @@ public class Doyouwar extends Application {
 
 		try {
 			initConfig();
+			// TODO reinitStatsLocally a supprimer en PROD
+			Utils.reinitStatsLocally(); 
 			launch(args);
 		} catch (IOException e) {
 			logger.error(e);
