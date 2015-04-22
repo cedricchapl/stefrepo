@@ -7,16 +7,26 @@ package org.chapellec.doyouwar.model;
  * @author Cédric Chapelle
  *
  */
-public class ServerStats {
+public class Answers {
 
-	int yes;
+	int yes = 0;
 
-	int no;
+	int no = 0;
+
+	/**
+	 * 
+	 * @param pYes
+	 * @param pNo
+	 */
+	public Answers(int pYes, int pNo) {
+		yes = pYes;
+		no = pNo;
+	}
 
 	/**
 	 * 
 	 */
-	public ServerStats() {
+	public Answers() {
 	}
 
 	/**

@@ -7,72 +7,58 @@ package org.chapellec.doyouwar.model;
  *
  */
 public class Stats {
-	int nbYES = 0;
-	int nbNO = 0;
-	int pendingNbYES = 0; // local only
-	int pendingNbNO = 0; // local only
-	int total; // calculated
-	int pctYES; // calculated
-	int pctNO; // calculated
+	
+	private Answers lastServerRetrieval = new Answers();
+
+	private int pendingYes = 0; // local only
+	private int pendingNo = 0; // local only
+	private int total; // calculated
+	private int pctYES; // calculated
+	private int pctNO; // calculated
 
 	/**
-	 * @return the nbYES
+	 * @param lastServerRetrieval
+	 *            the lastServerRetrieval to set
 	 */
-	public int getNbYES() {
-		return nbYES;
+	public void setLastServerRetrieval(Answers lastServerRetrieval) {
+		this.lastServerRetrieval = lastServerRetrieval;
 	}
 
 	/**
-	 * @param nbYES
-	 *            the nbYES to set
+	 * @return the lastServerRetrieval
 	 */
-	public void setNbYES(int nbYES) {
-		this.nbYES = nbYES;
+	public Answers getLastServerRetrieval() {
+		return lastServerRetrieval;
 	}
 
 	/**
-	 * @return the nbNO
+	 * @return the pendingYes
 	 */
-	public int getNbNO() {
-		return nbNO;
+	public int getPendingYes() {
+		return pendingYes;
 	}
 
 	/**
-	 * @param nbNO
-	 *            the nbNO to set
+	 * @param pendingYes
+	 *            the pendingYes to set
 	 */
-	public void setNbNO(int nbNO) {
-		this.nbNO = nbNO;
+	public void setPendingYes(int pendingYes) {
+		this.pendingYes = pendingYes;
 	}
 
 	/**
-	 * @return the pendingNbYES
+	 * @return the pendingNo
 	 */
-	public int getPendingNbYES() {
-		return pendingNbYES;
+	public int getPendingNo() {
+		return pendingNo;
 	}
 
 	/**
-	 * @param pendingNbYES
-	 *            the pendingNbYES to set
+	 * @param pendingNo
+	 *            the pendingNo to set
 	 */
-	public void setPendingNbYES(int pendingNbYES) {
-		this.pendingNbYES = pendingNbYES;
-	}
-
-	/**
-	 * @return the pendingNbNO
-	 */
-	public int getPendingNbNO() {
-		return pendingNbNO;
-	}
-
-	/**
-	 * @param pendingNbNO
-	 *            the pendingNbNO to set
-	 */
-	public void setPendingNbNO(int pendingNbNO) {
-		this.pendingNbNO = pendingNbNO;
+	public void setPendingNo(int pendingNo) {
+		this.pendingNo = pendingNo;
 	}
 
 	/**
@@ -121,21 +107,21 @@ public class Stats {
 	}
 
 	/**
-	 * Ajoute une ou plusieurs r�ponses YES
+	 * Ajoute une ou plusieurs reponses YES
 	 * 
-	 * @param additionalNbYES
+	 * @param addedYes
 	 */
-	public void addNbYES(int additionalNbYES) {
-		this.nbYES += additionalNbYES;
+	public void addYES(int addedYes) {
+		lastServerRetrieval.setYes(lastServerRetrieval.getYes() + addedYes);
 	}
 
 	/**
-	 * Ajoute une ou plusieurs r�ponses NO
+	 * Ajoute une ou plusieurs reponses NO
 	 * 
-	 * @param additionalNbNO
+	 * @param addedNo
 	 */
-	public void addNbNO(int additionalNbNO) {
-		this.nbNO += additionalNbNO;
+	public void addNo(int addedNo) {
+		lastServerRetrieval.setNo(lastServerRetrieval.getNo() + addedNo);
 	}
 
 }

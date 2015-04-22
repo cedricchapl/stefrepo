@@ -7,10 +7,8 @@ import java.net.URI;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
@@ -23,12 +21,12 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriBuilder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.chapellec.doyouwar.ProjectParams;
-import org.codehaus.jettison.json.JSONObject;
 
 /**
  * @author Cédric Chapelle
@@ -109,7 +107,7 @@ public class AppClient {
 	 * 
 	 * @return les stats si réussite, null sinon
 	 */
-	public ServerStats get() {
+	public Answers get() {
 		logger.debug("start get()");
 
 		WebTarget target = build().target(AppClient.getBaseURI(true));
@@ -119,8 +117,8 @@ public class AppClient {
 						"Basic " + ProjectParams.getProperty(ProjectParams.REST_AUTH_KEY))
 				.get(Response.class);
 
-		if (resp.getStatus() == HttpsURLConnection.HTTP_OK) {
-			ServerStats serverStats = resp.readEntity(ServerStats.class);
+		if (resp.getStatus() == Status.OK.getStatusCode()) {
+			Answers serverStats = resp.readEntity(Answers.class);
 			logger.debug("get() response : " + resp);
 			logger.debug(serverStats);
 			return serverStats;
@@ -132,27 +130,26 @@ public class AppClient {
 	/**
 	 * Transférer des réponses vers le serveur
 	 * 
-	 * @param answers
-	 *            map comportant un nombre de votes "yes"
-	 *            et un nombre de votes "no"
-	 * 
+	 * @param data
+	 *            
 	 * @return true si réussite du transfert
 	 */
-	public boolean post(Map<String, Integer> answers) {
+	public boolean post(Answers data) {
 		logger.debug("start post()");
 
 		WebTarget target = build().target(AppClient.getBaseURI(true));
-		JSONObject data = new JSONObject(answers);
 
+		Entity<Answers> entity = Entity.json(data);
+		
 		Response resp = target
 				.request()
 				.header(HttpHeaders.AUTHORIZATION,
 						"Basic " + ProjectParams.getProperty(ProjectParams.REST_AUTH_KEY))
-				.post(Entity.entity(data, MediaType.APPLICATION_JSON));
+				.post(entity);
 
-		if (resp.getStatus() == HttpsURLConnection.HTTP_CREATED) {
+		if (resp.getStatus() == Status.CREATED.getStatusCode()) {
 			logger.debug("post() response : " + resp);
-			logger.debug("json data sent : " + data);
+			logger.debug("json data sent : " + entity);
 			return true;
 		}
 		logger.error("post(), response error : " + resp);

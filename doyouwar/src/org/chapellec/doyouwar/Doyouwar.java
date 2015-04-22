@@ -50,7 +50,7 @@ public class Doyouwar extends Application {
 		InputStream in = Doyouwar.class.getResourceAsStream(fxml);
 		loader.setBuilderFactory(new JavaFXBuilderFactory());
 		loader.setLocation(Doyouwar.class.getResource(fxml));
-		Parent page;		
+		Parent page;
 		try {
 			page = (Parent) loader.load(in);
 		} finally {
@@ -58,7 +58,7 @@ public class Doyouwar extends Application {
 		}
 		Scene scene = new Scene(page, 800, 600);
 		stage.setScene(scene);
-		//stage.sizeToScene();
+		// stage.sizeToScene();
 		return (Initializable) loader.getController();
 	}
 
@@ -127,8 +127,8 @@ public class Doyouwar extends Application {
 
 		try {
 			initConfig();
-			// TODO reinitStatsLocally a supprimer en PROD
-			Utils.reinitStatsLocally(); 
+			// reinitialisation des stats a decommenter en dev/re7
+			// Utils.reinitStatsLocally();
 			launch(args);
 		} catch (IOException e) {
 			logger.error(e);

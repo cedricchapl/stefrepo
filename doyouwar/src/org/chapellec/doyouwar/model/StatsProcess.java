@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -62,15 +60,14 @@ public class StatsProcess {
 		if (logger.isDebugEnabled()) {
 			logger.debug("start process(" + answer + ")");
 		}
-		// TODO test load remote a supprimer
-		load(true);
-		// fin test
 		loadLocally();
 		if (sendPending()) {
-			boolean remoteTry = saveCurrent(true, answer, valYES, valNO);
-			load(remoteTry);
+			boolean remote = true;
+			remote = saveCurrent(remote, answer, valYES, valNO);
+			remote = load(remote);
+			updateLocalFile();
 			compute();
-			return remoteTry;
+			return remote;
 		} else {
 			saveCurrentLocally(answer, valYES, valNO);
 			compute();
@@ -86,15 +83,19 @@ public class StatsProcess {
 	 */
 	public boolean sendPending() {
 		logger.debug("start sendPending()");
-		if (stats != null && (stats.getPendingNbYES() + stats.getPendingNbNO()) > 0) {
+		if (stats.getPendingYes() + stats.getPendingNo() > 0) {
 
 			if (!Utils.isWebsiteAvailable()) {
-				logger.info("sendPending() : impossible to connect to the internet to synchronize pending local answers to server... next time maybe !");
+				logger.info("sendPending() : unavailable connection to the internet for synchronizing pending local answers to server... next time maybe !");
 				return false;
 			} else {
-				// return new AppClient().post(stats.getPendingNbYES(),
-				// stats.getPendingNbNO());
-				return true;
+				if (new AppClient().post(new Answers(stats.getPendingYes(), stats.getPendingNo()))) {
+					stats.setPendingYes(0);
+					stats.setPendingNo(0);
+					return true;
+				}
+				logger.error("sendPending() : error when synchronizing pending local answers.");
+				return false;
 			}
 		}
 		logger.debug("sendPending() : no pending local answers to synchronize.");
@@ -115,17 +116,16 @@ public class StatsProcess {
 		if (remoteTry && Utils.isWebsiteAvailable()) {
 
 			// maj des stats courantes
-			Map<String, Integer> answers = new LinkedHashMap<String, Integer>();
-			if (answer.equals(valYES)) {
-				answers.put("yes", 1);
-				answers.put("no", 0);
-			} else {
-				answers.put("yes", 0);
-				answers.put("no", 1);
+			Answers data = new Answers();
+			if (answer.equals(valYES))
+				data.setYes(1);
+			if (answer.equals(valNO))
+				data.setNo(1);
+
+			if (new AppClient().post(data)) {
+				return true;
 			}
 
-			if (new AppClient().post(answers))
-				return true;
 		}
 
 		logger.info("failed to contact server for sending current answer ==> saving locally...");
@@ -133,7 +133,6 @@ public class StatsProcess {
 		return true;
 	}
 
-	
 	/**
 	 * sauvegarde la reponse en attente en local
 	 */
@@ -143,22 +142,56 @@ public class StatsProcess {
 		}
 		// maj des stats courantes
 		if (answer.equals(valYES)) {
-			stats.setPendingNbYES(stats.getPendingNbYES() + 1);
+			stats.setPendingYes(stats.getPendingYes() + 1);
 		} else {
-			stats.setPendingNbNO(stats.getPendingNbNO() + 1);
+			stats.setPendingNo(stats.getPendingNo() + 1);
 		}
 
 		// ecriture dans le fichier
 		BufferedWriter writer = null;
 		try {
 			writer = new BufferedWriter(new FileWriter(localStatsFile));
-			writer.write("" + stats.getNbYES());
+			writer.write("" + stats.getLastServerRetrieval().getYes());
 			writer.newLine();
-			writer.write("" + stats.getNbNO());
+			writer.write("" + stats.getLastServerRetrieval().getNo());
 			writer.newLine();
-			writer.write("" + stats.getPendingNbYES());
+			writer.write("" + stats.getPendingYes());
 			writer.newLine();
-			writer.write("" + stats.getPendingNbNO());
+			writer.write("" + stats.getPendingNo());
+			writer.newLine();
+			return true;
+
+		} catch (IOException e) {
+			logger.error("Fail to write in file " + localStatsFile.getName(), e);
+			return false;
+		} finally {
+			try {
+				writer.close();
+			} catch (IOException e) {
+				logger.error(e);
+			}
+		}
+	}
+
+	/**
+	 * sauvegarde la reponse en attente en local
+	 */
+	public boolean updateLocalFile() {
+		if (logger.isDebugEnabled()) {
+			logger.debug("start updateLocalStatsFile()");
+		}
+
+		// ecriture dans le fichier
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new FileWriter(localStatsFile));
+			writer.write("" + stats.getLastServerRetrieval().getYes());
+			writer.newLine();
+			writer.write("" + stats.getLastServerRetrieval().getNo());
+			writer.newLine();
+			writer.write("" + stats.getPendingYes());
+			writer.newLine();
+			writer.write("" + stats.getPendingNo());
 			writer.newLine();
 			return true;
 
@@ -186,10 +219,9 @@ public class StatsProcess {
 		}
 
 		if (remoteTry && Utils.isWebsiteAvailable()) {
-			ServerStats remoteStats = new AppClient().get();
-			if (remoteStats != null) {
-				stats.setNbYES(remoteStats.getYes());
-				stats.setNbNO(remoteStats.getNo());
+			Answers remoteAnswers = new AppClient().get();
+			if (remoteAnswers != null) {
+				stats.setLastServerRetrieval(remoteAnswers);
 				return true;
 			}
 		}
@@ -217,14 +249,14 @@ public class StatsProcess {
 				// si le fichier n'est pas vide
 				// alors il doit comporter deja des stats,
 				// on tente de les recuperer
-				// 1ere ligne du fichier : nombre de YES du serveur
-				stats.setNbYES(Integer.valueOf(previousStatsYES));
-				// 2eme ligne du fichier : nombre de NO du serveur
-				stats.setNbNO(Integer.valueOf(previousStatsNO));
+				// 1ere et 2e lignes du fichier : derniers nombres de YES et NO
+				// connus du serveur
+				stats.setLastServerRetrieval(new Answers(Integer.valueOf(previousStatsYES), Integer
+						.valueOf(previousStatsNO)));
 				// 3eme ligne du fichier : nombre de YES en attente en local
-				stats.setPendingNbYES(Integer.valueOf(pendingStatsYES));
+				stats.setPendingYes(Integer.valueOf(pendingStatsYES));
 				// 4eme ligne du fichier : nombre de NO en attente en local
-				stats.setPendingNbNO(Integer.valueOf(pendingStatsNO));
+				stats.setPendingNo(Integer.valueOf(pendingStatsNO));
 			}
 			return true;
 		} catch (IOException e) {
@@ -248,10 +280,11 @@ public class StatsProcess {
 	public void compute() {
 		logger.debug("start compute()");
 
-		stats.setTotal(stats.getNbYES() + stats.getNbNO() + stats.getPendingNbYES()
-				+ stats.getPendingNbNO());
-		stats.setPctYES(Math.round((stats.getNbYES() + stats.getPendingNbYES()) * 100
-				/ stats.getTotal()));
+		stats.setTotal(stats.getLastServerRetrieval().getYes()
+				+ stats.getLastServerRetrieval().getNo() + stats.getPendingYes()
+				+ stats.getPendingNo());
+		stats.setPctYES(Math.round((stats.getLastServerRetrieval().getYes() + stats.getPendingYes())
+				* 100 / stats.getTotal()));
 		stats.setPctNO(100 - stats.getPctYES());
-	}		
+	}
 }
