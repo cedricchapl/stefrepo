@@ -3,6 +3,7 @@ package org.chapellec.doyouwar;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,22 @@ public class Doyouwar extends Application {
 	private static final Logger logger = LogManager.getLogger(Doyouwar.class);
 
 	private Stage stage;
+	
+	private Locale currentLocale = Locale.ENGLISH;
+			
+	/**
+	 * @param currentLocale the currentLocale to set
+	 */
+	public void setCurrentLocale(Locale currentLocale) {
+		this.currentLocale = currentLocale;
+	}
+	
+	/**
+	 * @return the currentLocale
+	 */
+	public Locale getCurrentLocale() {
+		return currentLocale;
+	}
 
 	@Override
 	public void start(Stage primaryStage) {
