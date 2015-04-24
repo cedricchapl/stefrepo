@@ -8,13 +8,13 @@
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="org.chapellec.doyouwar.controller.VoteController">
 
-	<Label id="voteQuestion" text="DO YOU WANT WAR ?" />
+	<Label id="voteQuestion" text="%vote_question_msg" />
 	<fx:define>
 		<ToggleGroup fx:id="answerGroup" />
 	</fx:define>
-	<RadioButton fx:id="answerYES" text="YES" toggleGroup="$answerGroup" />
-	<RadioButton fx:id="answerNO" text="NO" toggleGroup="$answerGroup" />
-	<Button onAction="#submitVote" text="SUBMIT"/>
+	<RadioButton fx:id="answerYES" text="%vote_yes_label" toggleGroup="$answerGroup" />
+	<RadioButton fx:id="answerNO" text="%vote_no_label" toggleGroup="$answerGroup" />
+	<Button onAction="#submitVote" text="%vote_submit_btn"/>
 
 </VBox>
 

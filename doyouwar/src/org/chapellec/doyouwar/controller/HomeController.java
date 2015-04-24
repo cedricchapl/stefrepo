@@ -8,9 +8,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 
 import org.apache.logging.log4j.LogManager;
@@ -31,9 +31,10 @@ public class HomeController implements Initializable {
 	private VBox homePane;
 
 	@FXML
+	private Image logo;
+
+	@FXML
 	private Hyperlink changeLng;
-	
-	private ResourceBundle bundle;
 
 	/**
 	 * Référence à l'application courante
@@ -50,9 +51,7 @@ public class HomeController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		bundle = resourceBundle;		
-//		changeLng.setText(bundle.getString("changelng.link"));
-		
+
 		changeLng.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -62,9 +61,6 @@ public class HomeController implements Initializable {
 				} else {
 					application.setCurrentLocale(Locale.UK);
 				}
-				FXMLLoader fxmlLoader = new FXMLLoader();
-				fxmlLoader.setResources(ResourceBundle.getBundle("bundles.messages",
-						application.getCurrentLocale()));
 				application.gotoHome();
 			}
 		});

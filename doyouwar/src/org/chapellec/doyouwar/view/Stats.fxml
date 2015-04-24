@@ -11,15 +11,15 @@
 	
 	<GridPane  fx:id="resultsPane" prefWidth="750" prefHeight="375"
 		gridLinesVisible="true">
-		<Label text="YES :"  styleClass="voteResultLabel"
+		<Label text="%stats_yes_label"  styleClass="voteResultLabel"
 			GridPane.columnIndex="0" GridPane.rowIndex="0" />
 		<Label fx:id="resultsYES" styleClass="voteResultLabel"
 			GridPane.columnIndex="1" GridPane.rowIndex="0" />
-		<Label text="NO :"  styleClass="voteResultPct"
+		<Label text="%stats_no_label"  styleClass="voteResultPct"
 			GridPane.columnIndex="0" GridPane.rowIndex="1" />
 		<Label fx:id="resultsNO" styleClass="voteResultPct"
 			GridPane.columnIndex="1" GridPane.rowIndex="1" />
-		<Label text="Voters :"  styleClass="voteResultLabel" 
+		<Label text="%stats_voters_label"  styleClass="voteResultLabel" 
 			GridPane.columnIndex="3" GridPane.rowIndex="2" />
 		<Label fx:id="resultsTotal" 
 			GridPane.columnIndex="4" GridPane.rowIndex="2" />

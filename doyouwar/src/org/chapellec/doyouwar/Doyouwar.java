@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,16 +32,17 @@ public class Doyouwar extends Application {
 	private static final Logger logger = LogManager.getLogger(Doyouwar.class);
 
 	private Stage stage;
-	
+
 	private Locale currentLocale = Locale.ENGLISH;
-			
+
 	/**
-	 * @param currentLocale the currentLocale to set
+	 * @param currentLocale
+	 *            the currentLocale to set
 	 */
 	public void setCurrentLocale(Locale currentLocale) {
 		this.currentLocale = currentLocale;
 	}
-	
+
 	/**
 	 * @return the currentLocale
 	 */
@@ -63,10 +65,12 @@ public class Doyouwar extends Application {
 
 	private Initializable replaceSceneContent(String fxml) throws Exception {
 		logger.debug("start replaceSceneContent()");
+
 		FXMLLoader loader = new FXMLLoader();
 		InputStream in = Doyouwar.class.getResourceAsStream(fxml);
 		loader.setBuilderFactory(new JavaFXBuilderFactory());
 		loader.setLocation(Doyouwar.class.getResource(fxml));
+		loader.setResources(ResourceBundle.getBundle("bundles.messages", getCurrentLocale()));
 		Parent page;
 		try {
 			page = (Parent) loader.load(in);

@@ -30,6 +30,8 @@ public class VoteController implements Initializable {
 	 */
 	private Doyouwar application;
 
+	ResourceBundle bundle;
+
 	/**
 	 * @param application
 	 *            the application to set
@@ -52,6 +54,7 @@ public class VoteController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		bundle = resourceBundle;
 	}
 
 	/**
@@ -68,9 +71,9 @@ public class VoteController implements Initializable {
 
 			String warning = "";
 			if (process.process(answer, answerYES.getText(), answerNO.getText())) {
-				warning = " (Succeeded to connect to the server, displaying up-to-date statistics...)";
+				warning = bundle.getString("stats_connect_on_msg");
 			} else {
-				warning = " (Failed to connect to the server, displaying last known statistics...)";
+				warning = bundle.getString("stats_connect_off_msg");
 			}
 
 			Stats stats = process.getStats();
