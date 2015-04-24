@@ -2,14 +2,16 @@ package org.chapellec.doyouwar.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 
@@ -34,7 +36,7 @@ public class HomeController implements Initializable {
 	private Image logo;
 
 	@FXML
-	private Hyperlink changeLng;
+	private ComboBox<String> changeLng;
 
 	/**
 	 * Référence à l'application courante
@@ -49,18 +51,49 @@ public class HomeController implements Initializable {
 		this.application = application;
 	}
 
+	private Map<String, Locale> locales;
+
+	/**
+	 * @param locales
+	 *            the locales to set
+	 */
+	public void setLocales(Map<String, Locale> locales) {
+		this.locales = locales;
+	}
+
+	/**
+	 * @return the locales
+	 */
+	public Map<String, Locale> getLocales() {
+		return locales;
+	}
+
+	/**
+	 * 
+	 */
+	public void initRefData() {
+		Map<String, Locale> tempLocales = new LinkedHashMap<String, Locale>();
+		tempLocales.put("en", Locale.ENGLISH);
+		tempLocales.put("fr", Locale.FRENCH);
+		tempLocales.put("it", Locale.ITALIAN);
+		setLocales(tempLocales);
+	}
+
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		
+		initRefData();
+		changeLng.getItems().addAll(getLocales().keySet());
 
 		changeLng.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				if (application.getCurrentLocale().equals(Locale.UK)) {
-					application.setCurrentLocale(Locale.FRANCE);
-				} else {
-					application.setCurrentLocale(Locale.UK);
-				}
+				@SuppressWarnings("unchecked")
+				String localeKey = ((ComboBox<String>) event.getSource()).getValue();
+
+				application.setCurrentLocale(getLocales().get(localeKey));
+
 				application.gotoHome();
 			}
 		});

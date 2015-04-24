@@ -7,6 +7,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -52,15 +53,12 @@ public class Doyouwar extends Application {
 
 	@Override
 	public void start(Stage primaryStage) {
-		logger.debug("enter start()");
-		try {
-			stage = primaryStage;
-			stage.setTitle("DOYOUWAR");
-			gotoHome();
-			stage.show();
-		} catch (Exception e) {
-			logger.error(e);
-		}
+		logger.debug("start start()");
+
+		stage = primaryStage;
+		stage.setTitle("DOYOUWAR");
+		gotoHome();
+		stage.show();
 	}
 
 	private Initializable replaceSceneContent(String fxml) throws Exception {
@@ -79,7 +77,7 @@ public class Doyouwar extends Application {
 		}
 		Scene scene = new Scene(page, 800, 600);
 		stage.setScene(scene);
-		// stage.sizeToScene();
+		stage.sizeToScene();
 		return (Initializable) loader.getController();
 	}
 
@@ -92,7 +90,8 @@ public class Doyouwar extends Application {
 			HomeController homeCtrl = (HomeController) replaceSceneContent("./view/Home.fxml");
 			homeCtrl.setMain(this);
 		} catch (Exception ex) {
-			logger.error(ex);
+			logger.fatal(ex);
+			Platform.exit();
 		}
 	}
 
@@ -105,7 +104,8 @@ public class Doyouwar extends Application {
 			VoteController voteCtrl = (VoteController) replaceSceneContent("./view/Vote.fxml");
 			voteCtrl.setMain(this);
 		} catch (Exception ex) {
-			logger.error(ex);
+			logger.fatal(ex);
+			Platform.exit();
 		}
 	}
 
@@ -122,7 +122,8 @@ public class Doyouwar extends Application {
 			statsCtrl.displayData(stats, warning);
 			stage.show();
 		} catch (Exception ex) {
-			logger.error(ex);
+			logger.fatal(ex);
+			Platform.exit();
 		}
 	}
 
@@ -148,12 +149,13 @@ public class Doyouwar extends Application {
 
 		try {
 			initConfig();
-			// reinitialisation des stats a decommenter en dev/re7
-			// Utils.reinitStatsLocally();
-			launch(args);
 		} catch (IOException e) {
-			logger.error(e);
+			logger.fatal(e);
+			Platform.exit();
 		}
-
+		
+		// reinitialisation des stats a decommenter en dev/re7
+		// Utils.reinitStatsLocally();
+		launch(args);
 	}
 }

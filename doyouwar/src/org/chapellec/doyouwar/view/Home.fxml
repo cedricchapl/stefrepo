@@ -5,14 +5,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.ComboBox?>
 
 <VBox fx:id="homePane" prefWidth="800" prefHeight="500"
 	stylesheets="applications.css"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="org.chapellec.doyouwar.controller.HomeController">
 	<children>
-		<Hyperlink fx:id="changeLng" text="%home_changelng_link"/>
+		<ComboBox fx:id="changeLng" />
 		
 		<ImageView preserveRatio="true">
 			<image>
