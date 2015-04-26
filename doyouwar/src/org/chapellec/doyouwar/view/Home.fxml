@@ -2,24 +2,32 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.BorderPane?>
 
-<VBox fx:id="homePane" prefWidth="800" prefHeight="500"
-	stylesheets="applications.css"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="org.chapellec.doyouwar.controller.HomeController">
-	<children>
-		<ComboBox fx:id="changeLng" />
-		
-		<ImageView preserveRatio="true">
-			<image>
-				<Image fx:id="logo" url="doyouwar50.png" backgroundLoading="true"/>
-			</image>			
-		</ImageView>		
-		<Label id="homeIntro" wrapText="true" text="%home_intro_msg"/>
-		<Button id="homeAccessProjectBtn" onAction="#accessProject" text="%home_intro_btn" />
-	</children>
-</VBox>
+<BorderPane id="homePane" 
+	styleClass="appPane" stylesheets="applications.css" 
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
+	fx:controller="org.chapellec.doyouwar.controller.HomeController"> 
+	<top>
+		<HBox id="lngBar" prefHeight="100">
+			<ImageView preserveRatio="true">
+				<image>
+					<Image fx:id="logo" url="doyouwar50.png" backgroundLoading="true" />
+				</image>
+			</ImageView>		 
+			<ComboBox fx:id="changeLng" />
+		</HBox>
+	</top>	
+	<center>	
+		<VBox>
+			<children>
+				<Label id="homeIntro" wrapText="true" text="%home_intro_msg" />
+				<Button id="homeAccessProjectBtn" onAction="#accessProject"
+					text="%home_intro_btn" />
+			</children>
+		</VBox>
+	</center>
+</BorderPane>

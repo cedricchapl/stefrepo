@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <VBox fx:id="votePane" prefWidth="800" prefHeight="500"
-	stylesheets="applications.css"
+	styleClass="appPane" stylesheets="applications.css"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="org.chapellec.doyouwar.controller.VoteController">
 

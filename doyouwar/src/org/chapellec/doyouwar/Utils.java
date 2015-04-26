@@ -50,15 +50,15 @@ public class Utils {
 			// ou une erreur du serveur (5XX)
 			// sont considerees comme non satisfaisantes
 			if (urlConn.getResponseCode() >= 400) {
-				logger.error(new StringBuilder("Connexion a ").append(strURL)
-						.append(" mais reponse http en erreur [")
+				logger.error(new StringBuilder("Connected to ").append(strURL)
+						.append(" but obtained an http reponse error [")
 						.append(+urlConn.getResponseCode()).append("]:")
 						.append(urlConn.getResponseMessage()).toString());
 				connected = false;
 			}
 
 		} catch (IOException e) {
-			logger.info("Echec de la connexion a " + strURL);
+			logger.info("Failed to conect to " + strURL);
 			connected = false;
 		}
 		return connected;

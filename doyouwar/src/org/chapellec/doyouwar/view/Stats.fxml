@@ -4,12 +4,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="statsPane" prefWidth="800" prefHeight="500"
-	stylesheets="applications.css"
+<VBox id="statsPane" prefWidth="800" prefHeight="500"
+	styleClass="appPane" stylesheets="applications.css"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="org.chapellec.doyouwar.controller.StatsController">
 	
-	<GridPane  fx:id="resultsPane" prefWidth="750" prefHeight="375"
+	<GridPane  fx:id="resultsPane" prefWidth="750" prefHeight="375" 
 		gridLinesVisible="true">
 		<Label text="%stats_yes_label"  styleClass="voteResultLabel"
 			GridPane.columnIndex="0" GridPane.rowIndex="0" />

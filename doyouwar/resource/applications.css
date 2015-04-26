@@ -1,28 +1,25 @@
-#homePane {	
+.appPane {	
 	-fx-background-color: white;
-	-fx-alignment:center;
+	-fx-alignment: center;
 }
 
-#logo {
-	-fx-alignment:right;
+#lngBar {
+	-fx-alignment: top-right ;	
+}
+
+#homePane #logo {
    	-fx-padding: 0 10 0 0;	
 }
 
-#homeIntro {	
-	-fx-alignment: center;
-	-fx-padding: 30 10;	
+#homePane #homeIntro {
+	-fx-font-size: 1.5em;	
+	-fx-padding: 30 70;	
 }
 
-#homeAccessProjectBtn {
-	-fx-alignment: center;
+#homePane #homeAccessProjectBtn {
 }
 
-#votePane {
-	-fx-background-color: white;
-	-fx-alignment:center;
-}
-
-#voteQuestion {
+#votePane #voteQuestion {
    	-fx-font-size: 1.5em;
    	-fx-font-family: "Arial Black ";
 	-fx-font-weight: bold;
@@ -30,19 +27,15 @@
    	-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
 }
 
-#statsPane {
-	-fx-background-color: white;
-	-fx-alignment:center;
-}
-
-#resultsPane {
+#statsPane #resultsPane {
+	-fx-alignment: center ;
 	-fx-background-size: cover;
 	-fx-background-image: url(world.jpg) ;
 	-fx-background-position: center center;		 
 	-fx-background-repeat:no-repeat;
 }
 
-.voteResultLabel {
+#statsPane .voteResultLabel {
     -fx-font-size: 3em;
     -fx-font-family: "Verdana";
     -fx-font-weight: bold ;
@@ -50,7 +43,7 @@
     /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 		
-.voteResultPct {
+#statsPane .voteResultPct {
     -fx-font-size: 3em;
     -fx-font-family: "Verdana";
     -fx-font-weight: bold ;
@@ -58,7 +51,7 @@
    /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 
-#resultsTotal {
+#statsPane #resultsTotal {
     -fx-font: 2em "Verdana";
 }
 

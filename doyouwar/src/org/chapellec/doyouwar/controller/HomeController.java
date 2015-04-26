@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
-import javafx.scene.layout.VBox;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,9 +25,6 @@ import org.chapellec.doyouwar.Doyouwar;
 public class HomeController implements Initializable {
 
 	private static final Logger logger = LogManager.getLogger(HomeController.class);
-
-	@FXML
-	private VBox homePane;
 
 	@FXML
 	private Image logo;

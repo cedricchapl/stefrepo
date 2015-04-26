@@ -66,6 +66,8 @@ public class Doyouwar extends Application {
 		Scene scene = new Scene(page, 800, 600);
 		stage.setScene(scene);
 		stage.sizeToScene();
+		stage.setResizable(false);
+		
 		return (Initializable) loader.getController();
 	}
 
