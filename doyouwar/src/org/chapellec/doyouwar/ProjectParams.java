@@ -22,6 +22,11 @@ public class ProjectParams {
 	public static String LOCALDATA_FILE_KEY = "filename.localdata";
 
 	/**
+	 * cle de message du mode de l'application
+	 */
+	public static String APP_MODE_KEY = "app.mode";
+	
+	/**
 	 * cle de message de l'url du service rest de maj/consultation des votes
 	 */
 	public static String REST_URL_KEY = "rest.url";

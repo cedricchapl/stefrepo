@@ -2,13 +2,11 @@ package org.chapellec.doyouwar.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
@@ -36,19 +34,26 @@ public class HomeController implements Initializable {
 	private Image logo;
 
 	@FXML
-	private ComboBox<String> changeLng;
+	private ComboBox<Locale> changeLng;
 
 	/**
 	 * Référence à l'application courante
+	 * 
+	 * @see www.guigarage.com/2013/12/datafx-controller-framework-preview/
+	 * 
 	 */
+	// TODO utiliser un fwk de DI pour application et data (
+	@SuppressWarnings("javadoc")
 	private Doyouwar application;
 
 	/**
-	 * @param application
+	 * @param pApplication
 	 *            the application to set
 	 */
-	public void setMain(Doyouwar application) {
-		this.application = application;
+	public void setMain(Doyouwar pApplication) {
+		application = pApplication;
+		changeLng.setItems(FXCollections.observableArrayList(Locale.ENGLISH, Locale.FRENCH,
+				Locale.ITALIAN));
 	}
 
 	private Map<String, Locale> locales;
@@ -68,34 +73,13 @@ public class HomeController implements Initializable {
 		return locales;
 	}
 
-	/**
-	 * 
-	 */
-	public void initRefData() {
-		Map<String, Locale> tempLocales = new LinkedHashMap<String, Locale>();
-		tempLocales.put("en", Locale.ENGLISH);
-		tempLocales.put("fr", Locale.FRENCH);
-		tempLocales.put("it", Locale.ITALIAN);
-		setLocales(tempLocales);
-	}
-
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		
-		initRefData();
-		changeLng.getItems().addAll(getLocales().keySet());
-
-		changeLng.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				@SuppressWarnings("unchecked")
-				String localeKey = ((ComboBox<String>) event.getSource()).getValue();
-
-				application.setCurrentLocale(getLocales().get(localeKey));
-
-				application.gotoHome();
-			}
+		changeLng.setValue(Locale.getDefault());
+		changeLng.setOnAction((event) -> {
+			Locale loc = changeLng.getSelectionModel().getSelectedItem();
+			Locale.setDefault(loc);
+			application.gotoHome();
 		});
 	}
 

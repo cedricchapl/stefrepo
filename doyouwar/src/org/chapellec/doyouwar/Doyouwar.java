@@ -32,24 +32,12 @@ public class Doyouwar extends Application {
 
 	private static final Logger logger = LogManager.getLogger(Doyouwar.class);
 
+	/**
+	 * Mode de l'application en production
+	 */
+	public static final String APP_MODE_PROD = "prod";
+
 	private Stage stage;
-
-	private Locale currentLocale = Locale.ENGLISH;
-
-	/**
-	 * @param currentLocale
-	 *            the currentLocale to set
-	 */
-	public void setCurrentLocale(Locale currentLocale) {
-		this.currentLocale = currentLocale;
-	}
-
-	/**
-	 * @return the currentLocale
-	 */
-	public Locale getCurrentLocale() {
-		return currentLocale;
-	}
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -68,7 +56,7 @@ public class Doyouwar extends Application {
 		InputStream in = Doyouwar.class.getResourceAsStream(fxml);
 		loader.setBuilderFactory(new JavaFXBuilderFactory());
 		loader.setLocation(Doyouwar.class.getResource(fxml));
-		loader.setResources(ResourceBundle.getBundle("bundles.messages", getCurrentLocale()));
+		loader.setResources(ResourceBundle.getBundle("bundles.messages", Locale.getDefault()));
 		Parent page;
 		try {
 			page = (Parent) loader.load(in);
@@ -82,7 +70,7 @@ public class Doyouwar extends Application {
 	}
 
 	/**
-	 * 
+	 * Charge la page Home
 	 */
 	public void gotoHome() {
 		logger.debug("start gotoHome()");
@@ -96,7 +84,7 @@ public class Doyouwar extends Application {
 	}
 
 	/**
-	 * 
+	 * Charge la page Vote
 	 */
 	public void gotoVote() {
 		logger.debug("start gotoVote()");
@@ -110,6 +98,7 @@ public class Doyouwar extends Application {
 	}
 
 	/**
+	 * Charge la page statistiques
 	 * 
 	 * @param stats
 	 * @param warning
@@ -153,9 +142,12 @@ public class Doyouwar extends Application {
 			logger.fatal(e);
 			Platform.exit();
 		}
-		
-		// reinitialisation des stats a decommenter en dev/re7
-		// Utils.reinitStatsLocally();
+
+		if (!APP_MODE_PROD.equalsIgnoreCase(ProjectParams.getProperty(ProjectParams.APP_MODE_KEY))) {
+			Utils.reinitStatsLocally();
+		}
+
+		Locale.setDefault(Locale.ENGLISH);
 		launch(args);
 	}
 }
