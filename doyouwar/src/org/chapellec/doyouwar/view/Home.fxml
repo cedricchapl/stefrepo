@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.Text?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
 
 <BorderPane id="homePane" 
 	styleClass="appPane" stylesheets="applications.css" 
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
 	fx:controller="org.chapellec.doyouwar.controller.HomeController"> 
 	<top>
-		<HBox id="lngBar" prefHeight="100">
-			<ImageView preserveRatio="true">
-				<image>
-					<Image fx:id="logo" url="doyouwar50.png" backgroundLoading="true" />
-				</image>
-			</ImageView>		 
-			<ComboBox fx:id="changeLng" />
+		<HBox styleClass="navBar">
+			<children> 
+				<ComboBox  fx:id="changeLng" />				
+   				<Pane  HBox.hgrow="ALWAYS" />
+				<ImageView preserveRatio="true">
+					<image>
+						<Image url="doyouwar50.png" backgroundLoading="true" />
+					</image>
+				</ImageView>		 
+			</children>
 		</HBox>
 	</top>	
 	<center>	
-		<VBox>
+		<VBox styleClass="content">
 			<children>
-				<Label id="homeIntro" wrapText="true" text="%home_intro_msg" />
-				<Button id="homeAccessProjectBtn" onAction="#accessProject"
-					text="%home_intro_btn" />
+				<Label id="homeIntro" text="%home_intro_msg" />
+				<Button id="accessProjectBtn" onAction="#accessProject" text="%home_intro_btn" />
 			</children>
 		</VBox>
 	</center>

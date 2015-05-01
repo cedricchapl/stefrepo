@@ -153,7 +153,7 @@ public class AppClient {
 			return true;
 		}
 		logger.error("post(), response error : " + resp);
-		logger.error("json data sent : " + data);
+		logger.error("json data sent : " + entity);
 		return false;
 	}
 

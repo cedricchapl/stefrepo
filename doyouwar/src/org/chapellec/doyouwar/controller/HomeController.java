@@ -3,14 +3,12 @@ package org.chapellec.doyouwar.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-import javafx.scene.image.Image;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,9 +23,6 @@ import org.chapellec.doyouwar.Doyouwar;
 public class HomeController implements Initializable {
 
 	private static final Logger logger = LogManager.getLogger(HomeController.class);
-
-	@FXML
-	private Image logo;
 
 	@FXML
 	private ComboBox<Locale> changeLng;
@@ -50,23 +45,6 @@ public class HomeController implements Initializable {
 		application = pApplication;
 		changeLng.setItems(FXCollections.observableArrayList(Locale.ENGLISH, Locale.FRENCH,
 				Locale.ITALIAN));
-	}
-
-	private Map<String, Locale> locales;
-
-	/**
-	 * @param locales
-	 *            the locales to set
-	 */
-	public void setLocales(Map<String, Locale> locales) {
-		this.locales = locales;
-	}
-
-	/**
-	 * @return the locales
-	 */
-	public Map<String, Locale> getLocales() {
-		return locales;
 	}
 
 	@Override

@@ -25,7 +25,12 @@ public class ProjectParams {
 	 * cle de message du mode de l'application
 	 */
 	public static String APP_MODE_KEY = "app.mode";
-	
+
+	/**
+	 * Mode de l'application en production
+	 */
+	public static final String APP_MODE_PROD = "prod";
+
 	/**
 	 * cle de message de l'url du service rest de maj/consultation des votes
 	 */
@@ -63,7 +68,16 @@ public class ProjectParams {
 			init();
 		}
 		return props.getProperty(name);
+	}
 
+	/**
+	 * Teste si l'application est en mode PRODUCTION
+	 * 
+	 * @return
+	 */
+	public static boolean isProductionMode() {
+		return APP_MODE_PROD
+				.equalsIgnoreCase(ProjectParams.getProperty(ProjectParams.APP_MODE_KEY));
 	}
 
 }

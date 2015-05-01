@@ -61,7 +61,7 @@ public class StatsProcess {
 			logger.debug("start process(" + answer + ")");
 		}
 		loadLocally();
-		if (sendPending()) {
+		if (ProjectParams.isProductionMode() && sendPending()) {
 			boolean remote = true;
 			remote = saveCurrent(remote, answer, valYES, valNO);
 			remote = load(remote);

@@ -32,11 +32,6 @@ public class Doyouwar extends Application {
 
 	private static final Logger logger = LogManager.getLogger(Doyouwar.class);
 
-	/**
-	 * Mode de l'application en production
-	 */
-	public static final String APP_MODE_PROD = "prod";
-
 	private Stage stage;
 
 	@Override
@@ -127,7 +122,7 @@ public class Doyouwar extends Application {
 		logger.debug("start initConfig()");
 		new File(ProjectParams.getProperty(ProjectParams.LOCALDATA_FILE_KEY)).createNewFile();
 	}
-
+	
 	/**
 	 * Démarre l'application
 	 * 
@@ -145,7 +140,7 @@ public class Doyouwar extends Application {
 			Platform.exit();
 		}
 
-		if (!APP_MODE_PROD.equalsIgnoreCase(ProjectParams.getProperty(ProjectParams.APP_MODE_KEY))) {
+		if (!ProjectParams.isProductionMode()) {
 			Utils.reinitStatsLocally();
 		}
 

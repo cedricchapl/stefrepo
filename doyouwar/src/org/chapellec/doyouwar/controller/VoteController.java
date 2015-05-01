@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.VBox;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,9 +38,6 @@ public class VoteController implements Initializable {
 	public void setMain(Doyouwar application) {
 		this.application = application;
 	}
-
-	@FXML
-	private VBox votePane;
 
 	@FXML
 	private ToggleGroup answerGroup;

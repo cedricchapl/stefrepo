@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Label?>
 
-<VBox id="statsPane" prefWidth="800" prefHeight="500"
+<BorderPane id="statsPane" 
 	styleClass="appPane" stylesheets="applications.css"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="org.chapellec.doyouwar.controller.StatsController">
-	
-	<GridPane  fx:id="resultsPane" prefWidth="750" prefHeight="375" 
-		gridLinesVisible="true">
-		<Label text="%stats_yes_label"  styleClass="voteResultLabel"
-			GridPane.columnIndex="0" GridPane.rowIndex="0" />
-		<Label fx:id="resultsYES" styleClass="voteResultLabel"
-			GridPane.columnIndex="1" GridPane.rowIndex="0" />
-		<Label text="%stats_no_label"  styleClass="voteResultPct"
-			GridPane.columnIndex="0" GridPane.rowIndex="1" />
-		<Label fx:id="resultsNO" styleClass="voteResultPct"
-			GridPane.columnIndex="1" GridPane.rowIndex="1" />
-		<Label text="%stats_voters_label"  styleClass="voteResultLabel" 
-			GridPane.columnIndex="3" GridPane.rowIndex="2" />
-		<Label fx:id="resultsTotal" 
-			GridPane.columnIndex="4" GridPane.rowIndex="2" />
-		<Label fx:id="voteInfo"
-			GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="4"/>
-	</GridPane>
-
-	
-</VBox>
+	<top>
+		<HBox styleClass="navBar"> 
+			<ImageView preserveRatio="true">
+				<image>
+					<Image url="doyouwar50.png" backgroundLoading="true" />
+				</image>
+			</ImageView>		 
+		</HBox>
+	</top>	
+	<center>	
+		<GridPane  fx:id="resultsPane" prefWidth="750" prefHeight="375" 
+			gridLinesVisible="true">
+			<Label  text="%stats_yes_label"  styleClass="voteResultLabel"
+				GridPane.columnIndex="0" GridPane.rowIndex="0" />
+			<Label fx:id="resultsYES" styleClass="voteResultLabel"
+				GridPane.columnIndex="1" GridPane.rowIndex="0" />
+			<Label text="%stats_no_label"  styleClass="voteResultPct"
+				GridPane.columnIndex="0" GridPane.rowIndex="1" />
+			<Label fx:id="resultsNO" styleClass="voteResultPct"
+				GridPane.columnIndex="1" GridPane.rowIndex="1" />
+			<Label text="%stats_voters_label"  styleClass="voteResultLabel" 
+				GridPane.columnIndex="3" GridPane.rowIndex="2" />
+			<Label fx:id="resultsTotal" 
+				GridPane.columnIndex="4" GridPane.rowIndex="2" />
+			<Label fx:id="voteInfo"
+				GridPane.columnIndex="0" GridPane.rowIndex="8" GridPane.columnSpan="4"/>
+		</GridPane>
+	</center>	
+</BorderPane>

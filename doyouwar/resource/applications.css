@@ -1,33 +1,58 @@
-.appPane {	
+/* caracteristiques par defaut d'une page de l'application */
+.appPane {
+	-fx-font-size: 15px;
+	-fx-pref-width: 800px;
+	-fx-pref-height: 500px;
+	-fx-font-family: "Arial";	
 	-fx-background-color: white;
-	-fx-alignment: center;
+	-fx-alignment: center;	
 }
 
-#lngBar {
-	-fx-alignment: top-right ;	
+.Button {
+	-fx-padding: 10px ;	
 }
 
-#homePane #logo {
-   	-fx-padding: 0 10 0 0;	
+.content {	
+	-fx-alignment: top-center;
+	-fx-padding: 100px 80px ;		
 }
 
-#homePane #homeIntro {
-	-fx-font-size: 1.5em;	
-	-fx-padding: 30 70;	
+.radioButton .text {
+    -fx-min-height: 20px;
+    -fx-font-weight: 400;
+    -fx-cursor: pointer;
 }
 
-#homePane #homeAccessProjectBtn {
+#changeLng  {
+	-fx-border-color: grey ;
+	-fx-border-style: dotted ;
+	-fx-background-color: white ;
+}
+
+.navBar {
+	-fx-pref-height: 100px ;
+	-fx-alignment: top-right ;
+	-fx-padding: 10px ;	
+}
+ 
+#homePane #homeIntro {	
+	-fx-padding: 30px 0 0 0;
+	-fx-text-alignment: justify;
+	-fx-wrap-text: true ; 	
 }
 
 #votePane #voteQuestion {
-   	-fx-font-size: 1.5em;
-   	-fx-font-family: "Arial Black ";
+	-fx-padding: 30px 0;
+	-fx-font-size: 40px;
 	-fx-font-weight: bold;
-   	-fx-fill: #818181;
-   	-fx-effect: innershadow( three-pass-box , rgba(0,0,0,0.7) , 6, 0.0 , 0 , 2 );
+}
+
+#votePane RadioButton {
+	-fx-padding: 10px 20px 0 10px;
 }
 
 #statsPane #resultsPane {
+	-fx-font-family: "Verdana";	
 	-fx-alignment: center ;
 	-fx-background-size: cover;
 	-fx-background-image: url(world.jpg) ;
@@ -35,33 +60,20 @@
 	-fx-background-repeat:no-repeat;
 }
 
-#statsPane .voteResultLabel {
-    -fx-font-size: 3em;
-    -fx-font-family: "Verdana";
+#statsPane #resultsPane .voteResultLabel {
+    -fx-font-size: 3.0em;
     -fx-font-weight: bold ;
     -fx-text-fill: darkred;    
     /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 		
-#statsPane .voteResultPct {
-    -fx-font-size: 3em;
-    -fx-font-family: "Verdana";
+#statsPane #resultsPane .voteResultPct {
+    -fx-font-size: 3.0em;
     -fx-font-weight: bold ;
     -fx-text-fill: darkred;    
    /*-fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );*/
 }
 
-#statsPane #resultsTotal {
-    -fx-font: 2em "Verdana";
-}
-
-
-.button {
-	-fx-pref-width: 100px;
-	-fx-pref-height: 40px;	
-    -fx-text-fill: white;
-    -fx-font-family: "Arial Narrow";
-    -fx-font-weight: bold;
-    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+#statsPane #resultsPane #resultsTotal {
+    -fx-font-size: 2.0em;
 }

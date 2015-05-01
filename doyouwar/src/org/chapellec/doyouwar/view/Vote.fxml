@@ -1,20 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="votePane" prefWidth="800" prefHeight="500"
+<BorderPane id="votePane" 
 	styleClass="appPane" stylesheets="applications.css"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="org.chapellec.doyouwar.controller.VoteController">
-
-	<Label id="voteQuestion" text="%vote_question_msg" />
-	<fx:define>
-		<ToggleGroup fx:id="answerGroup" />
-	</fx:define>
-	<RadioButton fx:id="answerYES" text="%vote_yes_label" toggleGroup="$answerGroup" />
-	<RadioButton fx:id="answerNO" text="%vote_no_label" toggleGroup="$answerGroup" />
-	<Button onAction="#submitVote" text="%vote_submit_btn"/>
-
-</VBox>
+	<top>
+		<HBox styleClass="navBar"> 
+			<ImageView preserveRatio="true">
+				<image>
+					<Image url="doyouwar50.png" backgroundLoading="true" />
+				</image>
+			</ImageView>		 
+		</HBox>
+	</top>	
+	<center>
+		<VBox styleClass="content"> 	
+			<Label id="voteQuestion" text="%vote_question_msg" />
+			<fx:define>
+				<ToggleGroup fx:id="answerGroup" />
+			</fx:define>
+			<RadioButton  fx:id="answerYES" text="%vote_yes_label" toggleGroup="$answerGroup" />
+			<RadioButton  fx:id="answerNO" text="%vote_no_label" toggleGroup="$answerGroup" />
+			<Button  id="submitVoteBtn" onAction="#submitVote" text="%vote_submit_btn"/>
+		</VBox>
+	</center>
+</BorderPane>
 
